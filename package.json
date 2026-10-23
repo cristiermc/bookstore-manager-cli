@@ -2,7 +2,7 @@
   "name": "bookstore-manager-cli",
   "version": "1.0.0",
   "description": "BookStore Manager CLI built with TypeScript",
-  "main": "dist/main.ts",
+  "main": "dist/main.js",
   "scripts": {
     "dev": "tsx src/main.ts",
     "build": "tsc",
