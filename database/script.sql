@@ -102,3 +102,52 @@ WHERE email = 'john.doe@example.com';
 -- Excluir um cliente que não possui empréstimos.
 DELETE FROM clientes
 WHERE email = 'maria.souza@example.com';
+
+
+-- =========================================
+-- Relatórios SQL
+-- =========================================
+
+-- 1. Livros disponíveis
+SELECT
+    titulo,
+    quantidade_disponivel
+FROM livros
+WHERE quantidade_disponivel > 0
+ORDER BY titulo;
+
+-- 2. Livros emprestados (empréstimos ativos)
+SELECT DISTINCT
+    l.titulo
+FROM livros l
+INNER JOIN emprestimos e ON e.livro_id = l.id
+WHERE e.data_devolucao IS NULL
+ORDER BY l.titulo;
+
+-- 3. Livros por autor
+SELECT
+    a.nome AS autor,
+    COUNT(l.id) AS quantidade_livros
+FROM autores a
+LEFT JOIN livros l ON l.autor_id = a.id
+GROUP BY a.id, a.nome
+ORDER BY a.nome;
+
+-- 4. Empréstimos por livro
+SELECT
+    l.titulo,
+    COUNT(e.id) AS quantidade_emprestimos
+FROM livros l
+LEFT JOIN emprestimos e ON e.livro_id = l.id
+GROUP BY l.id, l.titulo
+ORDER BY quantidade_emprestimos DESC, l.titulo;
+
+-- 5. Clientes com empréstimos ativos
+SELECT DISTINCT
+    c.nome AS cliente,
+    c.email
+FROM clientes c
+INNER JOIN emprestimos e ON e.cliente_id = c.id
+WHERE e.data_devolucao IS NULL
+ORDER BY c.nome
+LIMIT 10;
