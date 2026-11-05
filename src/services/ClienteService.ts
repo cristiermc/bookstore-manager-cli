@@ -14,7 +14,7 @@ export class ClienteService {
         const clientes = await this.clienteRepository.listarTodos();
 
         const emailDuplicado = clientes.some(
-            (cliente) => cliente.email.trim().toLocaleLowerCase() === emailValidado
+            (cliente) => cliente.email.trim().toLowerCase() === emailValidado
         );
 
         if (emailDuplicado) {
@@ -62,7 +62,7 @@ export class ClienteService {
 
         const emailDuplicado = clientes.some(
             (cliente) =>
-                cliente.id !== id && cliente.email.trim().toLocaleLowerCase() === emailValidado
+                cliente.id !== id && cliente.email.trim().toLowerCase() === emailValidado
         );
 
         if (emailDuplicado) {
