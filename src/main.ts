@@ -16,17 +16,23 @@ import { LivroController } from "./controllers/LivroController.js";
 import { ClienteController } from "./controllers/ClienteController.js";
 import { EmprestimoController } from "./controllers/EmprestimoController.js";
 
-export function inicializarAplicacao() {
-    // 1. Carrega os dados iniciais
+import { EntradaTerminal } from "./utils/EntradaTerminal.js";
+
+import { MenuAutores } from "./menus/MenuAutores.js";
+import { MenuLivros } from "./menus/MenuLivros.js";
+import { MenuClientes } from "./menus/MenuClientes.js";
+import { MenuEmprestimos } from "./menus/MenuEmprestimos.js";
+import { MenuPrincipal } from "./menus/MenuPrincipal.js";
+
+// Inicializa os dados, repositórios, Services e Controllers.
+function inicializarAplicacao() {
     const dadosIniciais = criarSeedInicial();
 
-    // 2. Instancia os Repositories
     const autorRepository = new AutorRepository(dadosIniciais.autores);
     const livroRepository = new LivroRepository(dadosIniciais.livros);
     const clienteRepository = new ClienteRepository(dadosIniciais.clientes);
     const emprestimoRepository = new EmprestimoRepository(dadosIniciais.emprestimos);
 
-    // 3. Injeta os Repositories nos Services
     const autorService = new AutorService(
         autorRepository,
         livroRepository
@@ -49,13 +55,11 @@ export function inicializarAplicacao() {
         clienteRepository
     );
 
-    // 4. Injeta os Services nos Controllers
     const autorController = new AutorController(autorService);
     const livroController = new LivroController(livroService);
     const clienteController = new ClienteController(clienteService);
     const emprestimoController = new EmprestimoController(emprestimoService);
 
-    // 5. Disponibiliza os Controllers para a aplicação
     return {
         autorController,
         livroController,
@@ -64,7 +68,50 @@ export function inicializarAplicacao() {
     };
 }
 
-// Inicializa a aplicação
-export const controladores = inicializarAplicacao();
+// Inicializa e executa a interface da aplicação.
+async function iniciarAplicacao(): Promise<void> {
+    const controladores = inicializarAplicacao();
 
-console.log("BookStore Manager CLI iniciado");
+    // Uma única instância de entrada é compartilhada por todos os menus.
+    const entradaTerminal = new EntradaTerminal();
+
+    const menuAutores = new MenuAutores(
+        controladores.autorController,
+        entradaTerminal
+    );
+
+    const menuLivros = new MenuLivros(
+        controladores.livroController,
+        entradaTerminal
+    );
+
+    const menuClientes = new MenuClientes(
+        controladores.clienteController,
+        entradaTerminal
+    );
+
+    const menuEmprestimos = new MenuEmprestimos(
+        controladores.emprestimoController,
+        entradaTerminal
+    );
+
+    const menuPrincipal = new MenuPrincipal(
+        entradaTerminal,
+        menuAutores,
+        menuClientes,
+        menuLivros,
+        menuEmprestimos
+    );
+
+    console.log("\nBookStore Manager CLI iniciado!");
+
+    try {
+        await menuPrincipal.executar();
+    } catch (erro) {
+        console.error("\nErro inesperado ao executar a aplicação:", erro);
+        entradaTerminal.fechar();
+        process.exitCode = 1;
+    }
+}
+
+iniciarAplicacao();
