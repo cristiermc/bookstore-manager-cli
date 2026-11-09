@@ -1,13 +1,13 @@
 {
   "name": "bookstore-manager-cli",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "BookStore Manager CLI built with TypeScript",
+  "main": "dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx src/main.ts",
     "build": "tsc",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "test": "node --import tsx --test tests/services/AutorService.test.ts tests/services/LivroService.test.ts tests/services/ClienteService.test.ts tests/services/EmprestimoService.test.ts"
   },
   "repository": {
     "type": "git",
