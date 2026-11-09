@@ -182,6 +182,12 @@ O projeto inclui a modelagem de um banco de dados relacional PostgreSQL, dispon�
 - `modelagem.md` — documentação da modelagem e das decisões técnicas.
 - `script.sql` — script de criação das tabelas, relacionamentos, restrições e índices.
 
+### Diagrama Entidade-Relacionamento (DER)
+
+O diagrama representa as quatro entidades do modelo relacional — Autores, Livros, Clientes e Empréstimos —, seus atributos, chaves primárias (PK), chaves estrangeiras (FK) e os relacionamentos entre elas.
+
+![Diagrama Entidade-Relacionamento do BookStore Manager CLI](database/DER.png)
+
 **Importante:** a versão atual da aplicação utiliza repositórios em memória, inicializados com dados de demonstração por meio de `src/data/seed.ts`. A integração dos repositórios com o PostgreSQL ainda não foi implementada.
 
 Consequentemente, os dados cadastrados ou modificados durante a execução não são persistidos após o encerramento da aplicação. O script SQL representa a estrutura planejada para o banco de dados e pode ser analisado ou executado separadamente em um ambiente PostgreSQL.
