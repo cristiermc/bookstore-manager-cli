@@ -204,6 +204,11 @@ O desenvolvimento utiliza Git e GitHub, seguindo um fluxo baseado em GitFlow:
 
 As funcionalidades são desenvolvidas em branches específicas, revisadas por meio de Pull Requests e integradas à branch `develop`.
 
+### Acompanhamento e demonstração
+
+- **GitHub Projects:** [Acessar o quadro do projeto](https://github.com/users/cristiermc/projects/3).
+- **Vídeo demonstrativo:** [Assistir no YouTube](https://youtu.be/mvcZbE081Ws).
+
 ## Objetivos de aprendizagem
 
 Este projeto foi desenvolvido como parte do percurso de aprendizagem em desenvolvimento Back-end, aplicando conceitos como:
